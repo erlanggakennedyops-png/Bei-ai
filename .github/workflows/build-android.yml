@@ -1,5 +1,5 @@
 
-name: Build Bei AI APK
+name: Build Be'i AI APK
 
 on:
   workflow_dispatch:
@@ -22,9 +22,8 @@ jobs:
 
       - name: Extract project
         run: |
-          unzip "Bei_AI_Starter_Project-1 (1).zip" -d project
-          mv "project/Bei_AI_Starter_Project-1 (1)"/* project/
-          mv "project/Bei_AI_Starter_Project-1 (1)"/.[!.]* project/ 2>/dev/null || true
+          mkdir -p project
+          unzip -o "Bei_AI_Starter_Project-1 (1).zip" -d project
 
       - name: Install and build
         working-directory: project
@@ -36,7 +35,9 @@ jobs:
 
       - name: Compile APK
         working-directory: project/android
-        run: chmod +x gradlew && ./gradlew assembleDebug
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
 
       - uses: actions/upload-artifact@v4
         with:
