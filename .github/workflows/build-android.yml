@@ -7,6 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -20,7 +21,10 @@ jobs:
           java-version: 21
 
       - name: Extract project
-        run: unzip "Bei_AI_Starter_Project-1 (1).zip" -d project
+        run: |
+          unzip "Bei_AI_Starter_Project-1 (1).zip" -d project
+          mv "project/Bei_AI_Starter_Project-1 (1)"/* project/
+          mv "project/Bei_AI_Starter_Project-1 (1)"/.[!.]* project/ 2>/dev/null || true
 
       - name: Install and build
         working-directory: project
