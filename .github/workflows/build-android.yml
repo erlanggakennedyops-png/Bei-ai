@@ -20,7 +20,7 @@ jobs:
           java-version: 21
 
       - name: Extract project
-        run: unzip Bei_AI_Starter_Project-1.zip -d project
+        run: unzip "Bei_AI_Starter_Project-1 (1).zip" -d project
 
       - name: Install and build
         working-directory: project
