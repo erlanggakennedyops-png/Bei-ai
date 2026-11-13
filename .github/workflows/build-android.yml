@@ -1,0 +1,40 @@
+
+name: Build Bei AI APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+
+      - name: Extract project
+        run: unzip Bei_AI_Starter_Project-1.zip -d project
+
+      - name: Install and build
+        working-directory: project
+        run: |
+          npm install
+          npm run build
+          npx cap add android
+          npx cap sync android
+
+      - name: Compile APK
+        working-directory: project/android
+        run: chmod +x gradlew && ./gradlew assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Bei-AI-APK
+          path: project/android/app/build/outputs/apk/debug/app-debug.apk
